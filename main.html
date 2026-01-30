@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+  }
+
+  #container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #startOverlay {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 20;
+  }
+
+  #label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(48px, 8vw, 120px);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    z-index: 10;
+    pointer-events: none;
+    text-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  }
+</style>
+</head>
+
+<body>
+
+<div id="startOverlay">click to enter...</div>
+
+<div id="container">
+  <video id="video" muted playsinline loop>
+    <source src="vid.mp4" type="video/mp4">
+  </video>
+
+  <audio id="audio" loop>
+    <source src="theme.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="label">Get ip grabbed you larp!</div>
+</div>
+
+  <div id="label">Ya allah!</div>
+</div>
+
+<script>
+  const overlay = document.getElementById('startOverlay');
+  const container = document.getElementById('container');
+  const video = document.getElementById('video');
+  const audio = document.getElementById('audio');
+
+  overlay.addEventListener('click', async () => {
+    overlay.style.display = 'none';
+
+    try {
+      if (container.requestFullscreen) {
+        await container.requestFullscreen();
+      } else if (container.webkitRequestFullscreen) {
+        await container.webkitRequestFullscreen();
+      }
+    } catch (e) {}
+
+    video.play();
+    audio.play();
+  });
+
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  document.addEventListener('keydown', e => {
+    if (
+      e.key === 'Escape' ||
+      e.key === 'F11' ||
+      e.ctrlKey ||
+      e.metaKey
+    ) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+      if (container.requestFullscreen) {
+        container.requestFullscreen();
+      } else if (container.webkitRequestFullscreen) {
+        container.webkitRequestFullscreen();
+      }
+    }
+  });
+
+  function resizeVideo() {
+    video.style.width = window.innerWidth + 'px';
+    video.style.height = window.innerHeight + 'px';
+  }
+
+  window.addEventListener('resize', resizeVideo);
+  window.addEventListener('orientationchange', resizeVideo);
+  resizeVideo();
+</script>
+
+</body>
+</html>
